@@ -1,8 +1,9 @@
-Number,Number,Number,Number,Number,Number,Number,Number,Number
-8.0,312.0,w,w,w,w,w,w,w
-5.0,213.0,w,s,TC05,TC06
-8.0,213.0,w,s,w,w,w,w,w
-5.0,123.0,w,s,TC05,TC06
-8.0,123.0,w,s,w,w,w,w,w
-5.0,123.0,w,s,TC05,TC06
-8.0,123.0,w,s,w,w,w,w,w
+Number,Number,TC03,TC04,TC05,TC06,TC07,TC08,Number
+0.0,,,TC05,TC06
+0.0,,,,TC05,TC06,TC06
+0.0,,A03,,A05,,,,a
+0.0,s,B04,,,,,gf
+0.0,,C05,C06,,C08,C08
+0.0,,s,D07,D08,D09,D09,d
+0.0
+,,,d,,f,,f

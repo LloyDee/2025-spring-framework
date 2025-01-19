@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         copyWithFormula(sourceFileA,targetFileC);
         ExcelCopySpecificColumns.copyPastes(sourceFileB,targetFileC);
+        ExcelToCsv.convertXlsxToCsv(targetFileC,ExcelToCsv.targetFileD);
     }
 
 

@@ -14,7 +14,7 @@ public class ExcelCopySpecificColumns {
     public static void copyPastes(String fr, String to) {
         String sourceFilePath = fr;      // Path to the source Excel file
         String destinationFilePath = to; // Path to the destination Excel file
-        int[] columnsToCopy = {3,4,5}; // 0-based indices of columns to copy (e.g., 1 = column B, 3 = column D)
+        int[] columnsToCopy = {2,3,4,5,6,7}; // 0-based indices of columns to copy (e.g., 1 = column B, 3 = column D)
 
         try (FileInputStream sourceFile = new FileInputStream(sourceFilePath);
              Workbook sourceWorkbook = new XSSFWorkbook(sourceFile);

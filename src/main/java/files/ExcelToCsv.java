@@ -22,54 +22,64 @@ public class ExcelToCsv {
             // Get the first sheet
             Sheet sheet = workbook.getSheetAt(0);
 
+            // Iterate through each row
             for (Row row : sheet) {
                 StringBuilder rowString = new StringBuilder();
 
-                // Iterate through the cells of the row
-                for (Cell cell : row) {
-                    // Get the cell value as a string, regardless of type
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            rowString.append(cell.getStringCellValue());
-                            break;
-                        case NUMERIC:
-                            if (DateUtil.isCellDateFormatted(cell)) {
-                                rowString.append(cell.getDateCellValue());
-                            } else {
-                                rowString.append(cell.getNumericCellValue());
-                            }
-                            break;
-                        case BOOLEAN:
-                            rowString.append(cell.getBooleanCellValue());
-                            break;
-                        case FORMULA:
-                            // Get the cached formula result value
-                            switch (cell.getCachedFormulaResultType()) {
-                                case STRING:
-                                    rowString.append(cell.getStringCellValue());
-                                    break;
-                                case NUMERIC:
-                                    if (DateUtil.isCellDateFormatted(cell)) {
-                                        rowString.append(cell.getDateCellValue());
-                                    } else {
-                                        rowString.append(cell.getNumericCellValue());
-                                    }
-                                    break;
-                                case BOOLEAN:
-                                    rowString.append(cell.getBooleanCellValue());
-                                    break;
-                                case BLANK:
-                                    rowString.append("----");
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case BLANK:
-                            break;
-                        default:
+                // Find the last cell index to handle empty cells correctly
+                int lastCellNum = row.getLastCellNum();
+
+                // Iterate through all cells up to the last cell index
+                for (int cellIndex = 0; cellIndex < lastCellNum; cellIndex++) {
+                    Cell cell = row.getCell(cellIndex);
+
+                    // Append cell value or empty if null
+                    if (cell == null) {
+                        rowString.append(""); // Empty cell
+                    } else {
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                rowString.append(cell.getStringCellValue());
+                                break;
+                            case NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    rowString.append(cell.getDateCellValue());
+                                } else {
+                                    rowString.append(cell.getNumericCellValue());
+                                }
+                                break;
+                            case BOOLEAN:
+                                rowString.append(cell.getBooleanCellValue());
+                                break;
+                            case FORMULA:
+                                // Use cached formula result
+                                switch (cell.getCachedFormulaResultType()) {
+                                    case STRING:
+                                        rowString.append(cell.getStringCellValue());
+                                        break;
+                                    case NUMERIC:
+                                        if (DateUtil.isCellDateFormatted(cell)) {
+                                            rowString.append(cell.getDateCellValue());
+                                        } else {
+                                            rowString.append(cell.getNumericCellValue());
+                                        }
+                                        break;
+                                    case BOOLEAN:
+                                        rowString.append(cell.getBooleanCellValue());
+                                        break;
+                                    default:
+                                        rowString.append("");
+                                        break;
+                                }
+                                break;
+                            case BLANK:
+                                rowString.append("");
+                                break;
+                            default:
+                                rowString.append("");
+                        }
                     }
-                    rowString.append(","); // Add a comma to separate values
+                    rowString.append(","); // Add comma as a delimiter
                 }
 
                 // Remove the last comma and add a new line
@@ -78,6 +88,8 @@ public class ExcelToCsv {
                 }
                 writer.println(rowString);
             }
+
+            System.out.println("Conversion completed successfully!");
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error occurred while converting XLSX to CSV: " + e.getMessage());
