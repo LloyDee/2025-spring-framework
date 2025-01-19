@@ -1,9 +1,8 @@
 Number,Number,Number,Number,Number,Number,Number,Number,Number
-COUNTA(B2:P2),TC05,TC06
-COUNTA(B3:P3),TC05,TC06
-COUNTA(B4:P4),A05,a
-COUNTA(B5:P5)
-COUNTA(B6:P6),C06,C08
-COUNTA(B7:P7),D07,D08,D09
-COUNTA(B8:P8)
-,d,f
+8.0,312.0,w,w,w,w,w,w,w
+5.0,213.0,w,s,TC05,TC06
+8.0,213.0,w,s,w,w,w,w,w
+5.0,123.0,w,s,TC05,TC06
+8.0,123.0,w,s,w,w,w,w,w
+5.0,123.0,w,s,TC05,TC06
+8.0,123.0,w,s,w,w,w,w,w
