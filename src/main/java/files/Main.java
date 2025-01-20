@@ -11,8 +11,8 @@ public class Main {
     static String sourceFileB = System.getProperty("user.dir")+"\\src\\main\\java\\reports\\b.xlsx";
     static String targetFileC = System.getProperty("user.dir")+"\\src\\main\\java\\reports\\c.xlsx";
     public static void main(String[] args) throws IOException {
-        copyWithFormula(sourceFileA,targetFileC);
-        ExcelCopySpecificColumns.copyPastes(sourceFileB,targetFileC);
+//        copyWithFormula(sourceFileA,targetFileC);
+//        ExcelCopySpecificColumns.copyPastes(sourceFileB,targetFileC);
         ExcelToCsv.convertXlsxToCsv(targetFileC,ExcelToCsv.targetFileD);
     }
 

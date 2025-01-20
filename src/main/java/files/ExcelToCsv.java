@@ -58,11 +58,12 @@ public class ExcelToCsv {
                                         rowString.append(cell.getStringCellValue());
                                         break;
                                     case NUMERIC:
-                                        if (DateUtil.isCellDateFormatted(cell)) {
-                                            rowString.append(cell.getDateCellValue());
-                                        } else {
-                                            rowString.append(cell.getNumericCellValue());
-                                        }
+                                        rowString.append("");
+//                                        if (DateUtil.isCellDateFormatted(cell)) {
+//                                            rowString.append(cell.getDateCellValue());
+//                                        } else {
+//                                            rowString.append(cell.getNumericCellValue());
+//                                        }
                                         break;
                                     case BOOLEAN:
                                         rowString.append(cell.getBooleanCellValue());

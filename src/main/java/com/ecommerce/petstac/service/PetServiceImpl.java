@@ -18,7 +18,6 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public void addPet(Pet pet) {
-        pet.setId(id++);
         if (petExist(pet)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         } else {
