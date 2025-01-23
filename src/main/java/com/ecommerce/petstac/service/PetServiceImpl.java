@@ -1,5 +1,7 @@
 package com.ecommerce.petstac.service;
 
+import com.ecommerce.petstac.exceptions.APIException;
+import com.ecommerce.petstac.exceptions.ResourceNotFoundException;
 import com.ecommerce.petstac.model.Pet;
 import com.ecommerce.petstac.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,61 +13,59 @@ import java.util.List;
 
 @Service
 public class PetServiceImpl implements PetService {
-    Long id = 1L;
 
     @Autowired
-    private PetRepository petRepository;
+    public PetRepository petRepository;
+
+    @Override
+    public List<Pet> getAllPets() {
+        List<Pet> pets = petRepository.findAll();
+        if (pets.isEmpty()) {
+            throw new APIException("No pets found");
+        } else {
+            return petRepository.findAll();
+        }
+    }
 
     @Override
     public void addPet(Pet pet) {
-        if (petExist(pet)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        Pet savedPet = petRepository.findByName(pet.getName());
+        if (savedPet != null) {
+            throw new APIException(pet.getName() + " already exists");
         } else {
             petRepository.save(pet);
         }
     }
 
-    private boolean petExist(Pet pet) {
-        for (Pet value : petRepository.findAll()) {
-            String petName = pet.getName();
-            if (value.getName().equals(petName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
-    public List<Pet> getAllPets() {
-        return petRepository.findAll();
+    public String deletePet(Long petId) {
+        Pet pet = petRepository.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet", "id", petId));
+        petRepository.delete(pet);
+        return "Pet deleted successfully";
     }
 
     @Override
     public void deleteAllPet() {
-        for (int i = 0; i < petRepository.findAll().size(); i++) {
-            petRepository.deleteAll();
-        }
-        throw new ResponseStatusException(HttpStatus.OK, "All pets have been deleted");
+       if (petRepository.findAll().isEmpty()) {
+           throw new APIException("No pets found");
+       }else {
+           petRepository.deleteAll();
+       }
     }
 
-    @Override
-    public void deletePet(Long petId) {
-        Pet pet = petRepository.findById(petId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found"));
-
-        petRepository.delete(pet);
-        throw new ResponseStatusException(HttpStatus.OK, pet.getName() + " has been deleted");
-
-    }
 
     @Override
     public void editPet(Pet pet, Long id) {
         petRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found"));
-
-        pet.setId(id);
-        petRepository.save(pet);
-        throw new ResponseStatusException(HttpStatus.OK, "Pet ID of " + id + " has been updated to " + pet.getName());
+                .orElseThrow(() -> new ResourceNotFoundException("Pet", "Pet ID", id));
+        if (petRepository.findById(id).isPresent()) {
+            if (petRepository.findByName(pet.getName()) != null) {
+                throw new APIException("Pet "+pet.getName()+" name already exists");
+            }else {
+                petRepository.save(pet);
+            }
+        }
 
     }
 }
