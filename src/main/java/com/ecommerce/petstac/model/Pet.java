@@ -15,12 +15,11 @@ import lombok.*;
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  id;
+    private Long  petId;
 
     @NotBlank
     @Size(min = 2, message = "Name must contain more than 2 characters")
     private String name;
-
 
     private int age;
 }

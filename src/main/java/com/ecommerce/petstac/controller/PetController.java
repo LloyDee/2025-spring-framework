@@ -2,6 +2,8 @@ package com.ecommerce.petstac.controller;
 
 import com.ecommerce.petstac.exceptions.APIException;
 import com.ecommerce.petstac.model.Pet;
+import com.ecommerce.petstac.payload.PetDTO;
+import com.ecommerce.petstac.payload.PetResponse;
 import com.ecommerce.petstac.service.PetService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,14 +23,15 @@ public class PetController {
     }
 
     @GetMapping("api/pets/")
-    public ResponseEntity<List<Pet>> getPets() {
-        return new ResponseEntity<>(petService.getAllPets(), HttpStatus.OK);
+    public ResponseEntity<PetResponse> getPets() {
+        PetResponse petResponse = petService.getAllPets();
+        return new ResponseEntity<>(petResponse, HttpStatus.OK);
     }
 
     @PostMapping("api/pets/")
-    public ResponseEntity<String> addPet(@Valid @RequestBody Pet pet) {
-        petService.addPet(pet);
-        return new ResponseEntity<>("Pet "+pet.getName()+" added", HttpStatus.CREATED);
+    public ResponseEntity<PetDTO> addPet(@Valid @RequestBody PetDTO petDTO) {
+        PetDTO petSavedDTO = petService.addPet(petDTO);
+        return new ResponseEntity<>(petSavedDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping("api/pets/{id}")
@@ -46,6 +49,6 @@ public class PetController {
     @PutMapping("api/pets/{petId}")
     public ResponseEntity<String> updatePet(@RequestBody Pet pet, @PathVariable Long petId) {
         petService.editPet(pet, petId);
-        return new ResponseEntity<>( "Pet ID of " + petId + " has been updated to " + pet.getName(),HttpStatus.OK);
+        return new ResponseEntity<>("Pet ID of " + petId + " has been updated to " + pet.getName(), HttpStatus.OK);
     }
 }

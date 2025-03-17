@@ -7,12 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -49,5 +47,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> myAPIException(APIException exception) {
         String message = exception.getMessage();
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MathException.class)
+    public ResponseEntity<String> myMathException(MathException exception) {
+        String message = exception.getMessage();
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

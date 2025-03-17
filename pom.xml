@@ -73,6 +73,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.kohsuke/wordnet-random-name -->
+        <dependency>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>wordnet-random-name</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
